@@ -57,18 +57,44 @@ def enter_values(key:str):
         result = eval(input_1.get())
         input_2.set(result)
 
+def enter_keyboard_values(event):
+    key = event.char
+
+    if key >= '0' and key <= '9' or key in ['(',')','.']:
+        input_2.set(input_2.get() + key)
+
+    if key in ['*','/','+','-']:
+        if key == '*':
+            input_1.set(input_2.get() + '*')
+
+        elif key == '/':
+            input_1.set(input_2.get() + '/')
+
+        elif key == '+':
+            input_1.set(input_2.get() + '+')
+            
+        elif key == '-':
+            input_1.set(input_2.get() + '-')
+        
+        input_2.set('')
+
+    if key == '=':
+        input_1.set(input_1.get() + input_2.get())
+        result = eval(input_1.get())
+        input_2.set(result)
+
 def square_root():
     input_1.set('')
     result = math.sqrt(float(input_2.get()))
     input_2.set(result)
 
-def delete():
+def delete(*args):
     start = 0
     end = len(input_2.get())
 
     input_2.set(input_2.get()[start:end - 1])
 
-def delete_all():
+def delete_all(*args):
     input_1.set('')
     input_2.set('')
 
@@ -185,5 +211,8 @@ for child in main_frame.winfo_children():
 
 root.bind('<KeyPress-o>', dark_theme)
 root.bind('<KeyPress-c>', clear_theme)
+root.bind('<Key>', enter_keyboard_values)
+root.bind('<KeyPress-b>', delete)
+root.bind('<KeyPress-q>', delete_all)
 
 root.mainloop()
