@@ -1,4 +1,4 @@
-from tkinter import *
+from tkinter import Tk, StringVar, W, N, E, S
 from tkinter import ttk
 import math
 
@@ -31,6 +31,72 @@ def clear_theme(*args):
 
     style_button_remaining.configure('Button_remaining.TButton', background='#CECECE', foreground='black')
     style_button_remaining.map('Button_remaining.TButton', background=[('active', '#858585')])
+
+def enter_values(key:str):
+
+    if key >= '0' and key <= '9' or key in ['(',')','.']:
+        input_2.set(input_2.get() + key)
+
+    if key in ['*','/','+','-']:
+        if key == '*':
+            input_1.set(input_2.get() + '*')
+
+        elif key == '/':
+            input_1.set(input_2.get() + '/')
+
+        elif key == '+':
+            input_1.set(input_2.get() + '+')
+            
+        elif key == '-':
+            input_1.set(input_2.get() + '-')
+        
+        input_2.set('')
+
+    if key == '=':
+        input_1.set(input_1.get() + input_2.get())
+        result = eval(input_1.get())
+        input_2.set(result)
+
+def enter_keyboard_values(event):
+    key = event.char
+
+    if key >= '0' and key <= '9' or key in ['(',')','.']:
+        input_2.set(input_2.get() + key)
+
+    if key in ['*','/','+','-']:
+        if key == '*':
+            input_1.set(input_2.get() + '*')
+
+        elif key == '/':
+            input_1.set(input_2.get() + '/')
+
+        elif key == '+':
+            input_1.set(input_2.get() + '+')
+            
+        elif key == '-':
+            input_1.set(input_2.get() + '-')
+        
+        input_2.set('')
+
+    if key == '=':
+        input_1.set(input_1.get() + input_2.get())
+        result = eval(input_1.get())
+        input_2.set(result)
+
+def square_root():
+    input_1.set('')
+    result = math.sqrt(float(input_2.get()))
+    input_2.set(result)
+
+def delete(*args):
+    start = 0
+    end = len(input_2.get())
+
+    input_2.set(input_2.get()[start:end - 1])
+
+def delete_all(*args):
+    input_1.set('')
+    input_2.set('')
 
 root = Tk()
 root.title('Calculator')
@@ -88,30 +154,30 @@ style_button_remaining.configure('Button_remaining.TButton', font='arial 22', wi
 style_button_remaining.map('Button_remaining.TButton', background=[('active', '#858585')])
 
 
-button_0 = ttk.Button(main_frame, text='0', style='Button_numbers.TButton')
-button_1 = ttk.Button(main_frame, text='1', style='Button_numbers.TButton')
-button_2 = ttk.Button(main_frame, text='2', style='Button_numbers.TButton')
-button_3 = ttk.Button(main_frame, text='3', style='Button_numbers.TButton')
-button_4 = ttk.Button(main_frame, text='4', style='Button_numbers.TButton')
-button_5 = ttk.Button(main_frame, text='5', style='Button_numbers.TButton')
-button_6 = ttk.Button(main_frame, text='6', style='Button_numbers.TButton')
-button_7 = ttk.Button(main_frame, text='7', style='Button_numbers.TButton')
-button_8 = ttk.Button(main_frame, text='8', style='Button_numbers.TButton')
-button_9 = ttk.Button(main_frame, text='9', style='Button_numbers.TButton')
+button_0 = ttk.Button(main_frame, text='0', style='Button_numbers.TButton', command=lambda: enter_values('0'))
+button_1 = ttk.Button(main_frame, text='1', style='Button_numbers.TButton', command=lambda: enter_values('1'))
+button_2 = ttk.Button(main_frame, text='2', style='Button_numbers.TButton', command=lambda: enter_values('2'))
+button_3 = ttk.Button(main_frame, text='3', style='Button_numbers.TButton', command=lambda: enter_values('3'))
+button_4 = ttk.Button(main_frame, text='4', style='Button_numbers.TButton', command=lambda: enter_values('4'))
+button_5 = ttk.Button(main_frame, text='5', style='Button_numbers.TButton', command=lambda: enter_values('5'))
+button_6 = ttk.Button(main_frame, text='6', style='Button_numbers.TButton', command=lambda: enter_values('6'))
+button_7 = ttk.Button(main_frame, text='7', style='Button_numbers.TButton', command=lambda: enter_values('7'))
+button_8 = ttk.Button(main_frame, text='8', style='Button_numbers.TButton', command=lambda: enter_values('8'))
+button_9 = ttk.Button(main_frame, text='9', style='Button_numbers.TButton', command=lambda: enter_values('9'))
 
-button_delete = ttk.Button(main_frame, text=chr(9003), style='Button_delete.TButton')
-button_delete_all = ttk.Button(main_frame, text='C', style='Button_delete.TButton')
-button_parenthesis_1 = ttk.Button(main_frame, text='(', style='Button_remaining.TButton')
-button_parenthesis_2 = ttk.Button(main_frame, text=')', style='Button_remaining.TButton')
-button_point = ttk.Button(main_frame, text='.', style='Button_remaining.TButton')
+button_delete = ttk.Button(main_frame, text=chr(9003), style='Button_delete.TButton', command=lambda: delete())
+button_delete_all = ttk.Button(main_frame, text='C', style='Button_delete.TButton', command=lambda: delete_all())
+button_parenthesis_1 = ttk.Button(main_frame, text='(', style='Button_remaining.TButton', command=lambda: enter_values('('))
+button_parenthesis_2 = ttk.Button(main_frame, text=')', style='Button_remaining.TButton', command=lambda: enter_values(')'))
+button_point = ttk.Button(main_frame, text='.', style='Button_remaining.TButton', command=lambda: enter_values('.'))
 
-button_divicion = ttk.Button(main_frame, text=chr(247), style='Button_remaining.TButton')
-button_multiplication = ttk.Button(main_frame, text='x', style='Button_remaining.TButton')
-button_subtraction = ttk.Button(main_frame, text='-', style='Button_remaining.TButton')
-button_add = ttk.Button(main_frame, text='+', style='Button_remaining.TButton')
+button_divicion = ttk.Button(main_frame, text=chr(247), style='Button_remaining.TButton', command=lambda: enter_values('/'))
+button_multiplication = ttk.Button(main_frame, text='x', style='Button_remaining.TButton', command=lambda: enter_values('*'))
+button_subtraction = ttk.Button(main_frame, text='-', style='Button_remaining.TButton', command=lambda: enter_values('-'))
+button_add = ttk.Button(main_frame, text='+', style='Button_remaining.TButton', command=lambda: enter_values('+'))
 
-button_equal = ttk.Button(main_frame, text='=', style='Button_remaining.TButton')
-button_square_root = ttk.Button(main_frame, text='√', style='Button_remaining.TButton')
+button_equal = ttk.Button(main_frame, text='=', style='Button_remaining.TButton', command=lambda: enter_values('='))
+button_square_root = ttk.Button(main_frame, text='√', style='Button_remaining.TButton', command=lambda: square_root())
 
 button_parenthesis_1.grid(column=0, row=2, sticky=(W, N, E, S))
 button_parenthesis_2.grid(column=1, row=2, sticky=(W, N, E, S))
@@ -145,5 +211,8 @@ for child in main_frame.winfo_children():
 
 root.bind('<KeyPress-o>', dark_theme)
 root.bind('<KeyPress-c>', clear_theme)
+root.bind('<Key>', enter_keyboard_values)
+root.bind('<KeyPress-b>', delete)
+root.bind('<KeyPress-q>', delete_all)
 
 root.mainloop()
