@@ -31,6 +31,7 @@ label_input_2.grid(column=0, row=1, columnspan=4, sticky=(W, E))
 # styles button
 style_button_numbers = ttk.Style()
 style_button_numbers.configure('Button_numbers.TButton', font='arial 22', width=5, background="#FFFFFF", relief="flat")
+style_button_numbers.map('Button_numbers.TButton', background=[('active', '#B9B9B9')])
 
 style_button_delete = ttk.Style()
 style_button_delete.configure('Button_delete.TButton', font='arial 22', width=5, background="#CECECE", relief="flat")
@@ -38,6 +39,7 @@ style_button_delete.map('Button_delete.TButton', foreground=[('active', '#FF0000
 
 style_button_remaining = ttk.Style()
 style_button_remaining.configure('Button_remaining.TButton', font='arial 22', width=5, background="#CECECE", relief="flat")
+style_button_remaining.map('Button_remaining.TButton', background=[('active', '#858585')])
 
 
 button_0 = ttk.Button(main_frame, text="0", style='Button_numbers.TButton')
@@ -94,4 +96,5 @@ button_square_root.grid(column=3, row=7)
 
 for child in main_frame.winfo_children():
     child.grid_configure(ipady=10, padx=1, pady=1)
+
 root.mainloop()
